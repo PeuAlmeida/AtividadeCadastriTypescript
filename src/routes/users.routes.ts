@@ -1,26 +1,23 @@
-import { Router } from "express";
+/* eslint-disable prettier/prettier */
+/* eslint-disable import-helpers/order-imports */
+import {  Router } from "express";
 
-import { createUserController } from "../modules/users/useCases/createUser";
-import { listAllUsersController } from "../modules/users/useCases/listAllUsers";
-import { showUserProfileController } from "../modules/users/useCases/showUserProfile";
-import { turnUserAdminController } from "../modules/users/useCases/turnUserAdmin";
+import { createUserController } from "modules/useCases/createUser";
+import { findUserByEmailController } from "modules/useCases/findUserByEmail";
+import { findUserByIdController } from "modules/useCases/findUserById";
 
 const usersRoutes = Router();
 
-usersRoutes.post("/", (request, response) =>
-  createUserController.handle(request, response)
-);
+usersRoutes.post('/', (request, response) => {
+    return createUserController.handle(request, response);
+}) 
 
-usersRoutes.patch("/:user_id/admin", (request, response) =>
-  turnUserAdminController.handle(request, response)
-);
+usersRoutes.get('/', (request, response) => {
+    return findUserByEmailController.handle(request, response);
+})
 
-usersRoutes.get("/:user_id", (request, response) =>
-  showUserProfileController.handle(request, response)
-);
+usersRoutes.get('/:id', (request, response) => {
+    return findUserByIdController.handle(request, response);
+})
 
-usersRoutes.get("/", (request, response) =>
-  listAllUsersController.handle(request, response)
-);
-
-export { usersRoutes };
+export { usersRoutes }
